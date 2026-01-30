@@ -91,34 +91,9 @@ python manage.py startapp clientes
 </pre>
 </div>
 
-<h2>4. Criar arquivo .env</h2>
-<div class="box">
-<pre>
-SECRET_KEY=sua-chave-secreta
-DEBUG=True
-DB_NAME=db.sqlite3
-</pre>
-</div>
 
-<h2>5. Configurar settings.py</h2>
-<div class="box">
-<pre>
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG") == "True"
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.getenv("DB_NAME"),
-    }
-}
-</pre>
-</div>
 
 <h2>6. Model</h2>
 <div class="box">
