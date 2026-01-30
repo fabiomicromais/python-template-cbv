@@ -1,0 +1,79 @@
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ===============================
+# Virtualenv (caso exista)
+# ===============================
+env/
+venv/
+.venv/
+ENV/
+
+# ===============================
+# Django
+# ===============================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Arquivos compilados de migração
+**/migrations/*.pyc
+
+# Arquivos estáticos e media
+staticfiles/
+media/
+
+# ===============================
+# Variáveis de ambiente
+# ===============================
+.env
+.env.*
+.env.dev
+.env.prod
+
+# ===============================
+# Docker
+# ===============================
+docker-compose.override.yml
+.docker/
+*.pid
+
+# Ignorar volumes locais (se existirem)
+postgres_data/
+mysql_data/
+redis_data/
+
+# ===============================
+# Testes / cobertura
+# ===============================
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# ===============================
+# Build / distribuição
+# ===============================
+build/
+dist/
+*.egg-info/
+
+# ===============================
+# IDEs e editores
+# ===============================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# ===============================
+# Sistema operacional
+# ===============================
+.DS_Store
+Thumbs.db

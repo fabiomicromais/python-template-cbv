@@ -1,0 +1,7 @@
+<!-- form.html -->
+  <h2> Sistema utilizando Class Based View - CBV - </h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Salvar</button>
+</form>

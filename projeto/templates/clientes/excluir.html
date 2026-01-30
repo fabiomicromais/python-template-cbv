@@ -1,0 +1,7 @@
+<!-- excluir.html -->
+   <h2> Sistema utilizando Class Based View - CBV - </h2>
+<p>Deseja excluir {{ object.nome }}?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Excluir</button>
+</form>
