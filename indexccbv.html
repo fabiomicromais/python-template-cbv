@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD em Django com Class Based Views</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: #092e20;
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        }
+        h1, h2, h3 {
+            color: #092e20;
+        }
+        h2 {
+            margin-top: 40px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #dcdcdc;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        .box {
+            background: #f9fafb;
+            border-left: 5px solid #44b78b;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>CRUD em Django</h1>
+    <p>Class Based Views • Forms • .env • Virtualenv</p>
+</header>
+
+<main>
+
+<h2>1. Criar e ativar o Virtualenv</h2>
+<div class="box">
+<pre>
+python -m venv venv
+
+# Linux / Mac
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+</pre>
+</div>
+
+<h2>2. Instalar dependências</h2>
+<div class="box">
+<pre>
+pip install django python-dotenv
+</pre>
+</div>
+
+<h2>3. Criar projeto e app</h2>
+<div class="box">
+<pre>
+django-admin startproject projeto
+cd projeto
+python manage.py startapp clientes
+</pre>
+</div>
+
+<h2>4. Criar arquivo .env</h2>
+<div class="box">
+<pre>
+SECRET_KEY=sua-chave-secreta
+DEBUG=True
+DB_NAME=db.sqlite3
+</pre>
+</div>
+
+<h2>5. Configurar settings.py</h2>
+<div class="box">
+<pre>
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG") == "True"
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.getenv("DB_NAME"),
+    }
+}
+</pre>
+</div>
+
+<h2>6. Model</h2>
+<div class="box">
+<pre>
+# clientes/models.py
+from django.db import models
+
+class Cliente(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.nome
+</pre>
+</div>
+
+<h2>7. Form (Django Forms)</h2>
+<div class="box">
+<pre>
+# clientes/forms.py
+from django.forms import ModelForm
+from .models import Cliente
+
+class ClienteForm(ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ["nome", "email"]
+</pre>
+</div>
+
+<h2>8. Views (Class Based Views)</h2>
+
+<h3>READ – ListView</h3>
+<div class="box">
+<pre>
+# clientes/views.py
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Cliente
+from .forms import ClienteForm
+
+class ClienteListView(ListView):
+    model = Cliente
+    template_name = "clientes/lista.html"
+    context_object_name = "clientes"
+</pre>
+</div>
+
+<h3>CREATE – CreateView</h3>
+<div class="box">
+<pre>
+class ClienteCreateView(CreateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = "clientes/form.html"
+    success_url = reverse_lazy("lista")
+</pre>
+</div>
+
+<h3>UPDATE – UpdateView</h3>
+<div class="box">
+<pre>
+class ClienteUpdateView(UpdateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = "clientes/form.html"
+    success_url = reverse_lazy("lista")
+</pre>
+</div>
+
+<h3>DELETE – DeleteView</h3>
+<div class="box">
+<pre>
+class ClienteDeleteView(DeleteView):
+    model = Cliente
+    template_name = "clientes/excluir.html"
+    success_url = reverse_lazy("lista")
+</pre>
+</div>
+
+<h2>9. URLs</h2>
+<div class="box">
+<pre>
+# clientes/urls.py
+from django.urls import path
+from .views import (
+    ClienteListView,
+    ClienteCreateView,
+    ClienteUpdateView,
+    ClienteDeleteView
+)
+
+urlpatterns = [
+    path("", ClienteListView.as_view(), name="lista"),
+    path("novo/", ClienteCreateView.as_view(), name="criar"),
+    path("editar/&lt;int:pk&gt;/", ClienteUpdateView.as_view(), name="editar"),
+    path("excluir/&lt;int:pk&gt;/", ClienteDeleteView.as_view(), name="excluir"),
+]
+</pre>
+</div>
+
+<h2>10. Templates básicos</h2>
+<div class="box">
+<pre>
+&lt;!-- lista.html --&gt;
+{% for c in clientes %}
+  {{ c.nome }} - {{ c.email }}
+  &lt;a href="{% url 'editar' c.pk %}"&gt;Editar&lt;/a&gt;
+  &lt;a href="{% url 'excluir' c.pk %}"&gt;Excluir&lt;/a&gt;
+{% endfor %}
+</pre>
+</div>
+
+<div class="box">
+<pre>
+&lt;!-- form.html --&gt;
+&lt;form method="post"&gt;
+  {% csrf_token %}
+  {{ form.as_p }}
+  &lt;button type="submit"&gt;Salvar&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+</div>
+
+<div class="box">
+<pre>
+&lt;!-- excluir.html --&gt;
+&lt;p&gt;Deseja excluir {{ object.nome }}?&lt;/p&gt;
+&lt;form method="post"&gt;
+  {% csrf_token %}
+  &lt;button type="submit"&gt;Excluir&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+</div>
+
+<h2>11. Migrar e executar</h2>
+<div class="box">
+<pre>
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+</pre>
+</div>
+
+<h2>12. Boas práticas</h2>
+<ul>
+    <li>Use Virtualenv sempre</li>
+    <li>Nunca suba o arquivo <strong>.env</strong> para o Git</li>
+    <li>CBV reduz código e padroniza projetos</li>
+    <li>Delete sempre via POST</li>
+</ul>
+
+</main>
+
+<footer>
+    <p>CRUD em Django com Class Based Views</p>
+</footer>
+
+</body>
+</html>
