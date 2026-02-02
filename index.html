@@ -281,6 +281,16 @@ python manage.py runserver
     <li>Delete sempre via POST</li>
 </ul>
 
+<h2>13. Configurar URLs do projeto</h2>
+<div class="box">
+<pre>
+   adicionar no arquivo urls.py do projeto as urls do app clientes   
+  urlpatterns = [
+    path('',include('clientes.urls')),
+    path('admin/', admin.site.urls),
+]
+</pre>
+
 </main>
 
 <footer>
