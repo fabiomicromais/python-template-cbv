@@ -91,7 +91,20 @@ python manage.py startapp clientes
 </pre>
 </div>
 
+<h2>3. Configurar o settings.py</h2>
+<div class="box">
+<pre>
+# projeto/settings.py
+import os
+##colocar no item Templates
+'DIRS': [os.path.join(BASE_DIR, 'templates')],  
 
+INSTALLED_APPS = [
+    ...
+    'clientes',
+]   
+</pre>
+</div>
 
 
 
