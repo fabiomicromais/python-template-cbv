@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>CRUD em Django com Class Based Views</title>
+    <title>CRUD em Django com Class Based Views - Web1</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -57,16 +57,20 @@
 
 <header>
     <h1>CRUD em Django</h1>
-    <p>Class Based Views • Forms • .env • Virtualenv</p>
+    <p>Class Based Views • Forms • Django </p>
 </header>
 
 <main>
+<div class="box">
+<pre>
+   Antes de começar abra o terminal e crie uma pasta com seu-nome-data( ex: fabio-22-02)
+    1. entre na pasta criada e siga os passos abaixo: 
+    2. certifique se o python e pip estão instalados na sua máquina (digite no terminal o codigos abaixo)
+    pip -version 
+    python -version
+</pre>
+</div>
 
-    ## antes de começar abra o terminal e crie uma pasta com seu-nome-data para o projeto
-    1. entre na pasta criada e siga os passos abaixo:
-    2. certifique se o python e pip estão instalados na sua máquina
-    3. pip -version 
-    4. python -version
 
 <h2>1. Criar e ativar o Virtualenv</h2>
 <div class="box">
@@ -93,24 +97,11 @@ pip install django python-dotenv
 <h2>3. Criar projeto e app</h2>
 <div class="box">
 <pre>
+#projeto = nome do seu projeto
 django-admin startproject projeto
 cd projeto
+#clientes = nome do seu app
 python manage.py startapp clientes
-</pre>
-</div>
-
-<h2>4. Configurar o settings.py</h2>
-<div class="box">
-<pre>
-# projeto/settings.py
-import os
-##colocar no item Templates
-'DIRS': [os.path.join(BASE_DIR, 'templates')],  
-
-INSTALLED_APPS = [
-    ...
-    'clientes',
-]   
 </pre>
 </div>
 
@@ -121,19 +112,29 @@ INSTALLED_APPS = [
 </pre>
 </div>
 
-<h2>5 - configurar TEMPLATES</h2>
+<h2>4. Configurar o settings.py</h2>
 <div class="box">
 <pre>
-    1.1 - criar pasta 'templates' na raiz do projeto
-    1.2 - criar pasta 'clientes' dentro de 'templates'
-    1.3 - criar arquivos excluir.html, form.html, lista.html dentro de 'templates/clientes 
+# editar na pasta do projeto o arquivo settings.py
+#incluir: 
+    import os
+#colocar no item Templates
+    'DIRS': [os.path.join(BASE_DIR, 'templates')],  
+#incluir o nome do app na lista
+INSTALLED_APPS = [
+    ...
+    'clientes',
+]   
 </pre>
 </div>
 
-<h2>6. Model</h2>
+
+
+<h2> 6. Model</h2>
 <div class="box">
-<pre>
-# clientes/models.py
+# dentro do app clientes edite o arquivo models.py
+    <pre>
+
 from django.db import models
 
 class Cliente(models.Model):
@@ -145,7 +146,8 @@ class Cliente(models.Model):
 </pre>
 </div>
 
-<h2>7. Form (Django Forms) - crie o arquivo forms.py</h2>
+<h2>6. Form (Django Forms) </h2>
+## dentro do app clientes edite o arquivo forms.py, se não existir crie o arquivo forms.py
 <div class="box">
 <pre>
 # clientes/forms.py
@@ -159,9 +161,15 @@ class ClienteForm(ModelForm):
 </pre>
 </div>
 
-<h2>8. Views (Class Based Views) - todos no arquivo views.py</h2>
+<h2>7. Views (Class Based Views) </h2>
+<li>inclua todos os codigos abaixo  arquivo views.py dentro do app clientes</li>
+<li>cada bloco de código representa uma operação CRUD</li> 
+<li>lembre-se de ajustar os nomes dos templates conforme necessário</li>
+<li>certifique-se de importar os módulos corretos no início do arquivo</li>
+<li>o uso de reverse_lazy é importante para evitar problemas de importação circular</li>
 
-<h3>READ – ListView</h3>
+
+<h3>7.1 - READ – ListView</h3>
 <div class="box">
 <pre>
 # clientes/views.py
@@ -177,7 +185,7 @@ class ClienteListView(ListView):
 </pre>
 </div>
 
-<h3>CREATE – CreateView</h3>
+<h3>7.2 - CREATE – CreateView</h3>
 <div class="box">
 <pre>
 class ClienteCreateView(CreateView):
@@ -188,7 +196,7 @@ class ClienteCreateView(CreateView):
 </pre>
 </div>
 
-<h3>UPDATE – UpdateView</h3>
+<h3>7.3 - UPDATE – UpdateView</h3>
 <div class="box">
 <pre>
 class ClienteUpdateView(UpdateView):
@@ -199,7 +207,7 @@ class ClienteUpdateView(UpdateView):
 </pre>
 </div>
 
-<h3>DELETE – DeleteView</h3>
+<h3>7.4 - DELETE – DeleteView</h3>
 <div class="box">
 <pre>
 class ClienteDeleteView(DeleteView):
@@ -209,7 +217,8 @@ class ClienteDeleteView(DeleteView):
 </pre>
 </div>
 
-<h2>9. URLs</h2>
+<h2>8. criação da URLs</h2>
+- dentro do app clientes crie o arquivo urls.py e inclua o código abaixo
 <div class="box">
 <pre>
 # clientes/urls.py
@@ -229,8 +238,18 @@ urlpatterns = [
 ]
 </pre>
 </div>
+<h2>9 - criar a pasta TEMPLATES</h2>
+<div class="box">
+<pre>
+    1.1 - criar pasta 'templates' na raiz do projeto
+    1.2 - criar pasta 'clientes' dentro de 'templates'
+    1.3 - criar arquivos excluir.html, form.html, lista.html dentro de 'templates/clientes 
+</pre>
+</div>
+
 
 <h2>10. Templates básicos</h2>
+#dentro da pasta templates/clientes adicione o codigo abaixo nos arquivos lista.html, form.html, excluir.html
 <div class="box">
 <pre>
 &lt;!-- lista.html --&gt;
@@ -264,32 +283,39 @@ urlpatterns = [
 </pre>
 </div>
 
-<h2>11. Migrar e executar</h2>
-<div class="box">
-<pre>
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
-</pre>
-</div>
 
-<h2>12. Boas práticas</h2>
-<ul>
-    <li>Use Virtualenv sempre</li>
-    <li>Nunca suba o arquivo <strong>.env</strong> para o Git</li>
-    <li>CBV reduz código e padroniza projetos</li>
-    <li>Delete sempre via POST</li>
-</ul>
-
-<h2>13. Configurar URLs do projeto</h2>
+<h2>11. Configurar URLs do projeto</h2>
 <div class="box">
+   # adicionar no arquivo urls.py do projeto as urls do app clientes  
 <pre>
-   adicionar no arquivo urls.py do projeto as urls do app clientes   
+    
   urlpatterns = [
     path('',include('clientes.urls')),
     path('admin/', admin.site.urls),
 ]
 </pre>
+
+
+<h2>12. Migrar e executar o projeto</h2>
+<div class="box">
+<pre>
+#migra o do banco de dados
+    python manage.py makemigrations
+    python manage.py migrate
+#roda o servidor
+    python manage.py runserver
+#abra o browser e acesse o endereço
+    http://127.0.0.1:8000/
+    http://127.0.0.1:8000/clientes/novo/
+    http://127.0.0.1:8000/clientes/editar/1/
+    http://127.0.0.1:8000/clientes/excluir/1/
+   
+    OBS : substitua o número 1 pelo id do cliente cadastrado
+    
+
+</pre>
+</div>
+
 
 </main>
 
