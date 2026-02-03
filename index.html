@@ -348,7 +348,18 @@ urlpatterns = [
     &lt;h1&gt;Bem-vindo ao sistema de clientes&lt;/h1&gt;
     &lt;a href="{% url 'lista' %}"&gt;Gerenciar Clientes&lt;/a&gt;
 </pre>
+ <pre>
+# dentro do arquivo urls.py do app clientes
+    from . import views
+    urlpatterns = [
+        path('', views.index, name='index'),
+       ...,
+        ...
+    ]
+ </pre>
 </div>
+
+
 
 </main>
 
