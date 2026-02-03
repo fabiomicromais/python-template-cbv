@@ -315,7 +315,40 @@ urlpatterns = [
 
 </pre>
 </div>
+<h2>13. habilitar Admin e criar usuario</h2>
+<div class="box">
+<pre>
+# criar usuario admin
+    python manage.py createsuperuser
+# acessar o admin
+    http://127.0.0.1:8000/admin/
+#habilitar o model Cliente no admin
+# dentro do arquivo admin.py do app clientes
+    from django.contrib import admin
+    from .models import Cliente
+    admin.site.register(Cliente)
 
+# alterar o display do admin
+  #no arquivo admin.py do app clientes 
+    from django.contrib import admin
+    from .models import Cliente
+
+    @admin.register(Cliente)
+    class ClienteAdmin(admin.ModelAdmin):
+        list_display = ('nome cliente', 'email cliente')
+    
+</pre>
+</div>
+
+<h2>13=4. Criar pagina principal para acessar o app</h2>
+<div class="box">
+<pre>
+# dentro da pasta templates crie o arquivo index.html
+    &lt;!-- index.html --&gt;
+    &lt;h1&gt;Bem-vindo ao sistema de clientes&lt;/h1&gt;
+    &lt;a href="{% url 'lista' %}"&gt;Gerenciar Clientes&lt;/a&gt;
+</pre>
+</div>
 
 </main>
 

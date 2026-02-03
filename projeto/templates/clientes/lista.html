@@ -1,7 +1,9 @@
 <!-- lista.html -->
   <h2> Sistema utilizando Class Based View - CBV - </h2>
+   <a href="{% url 'criar_cliente' %}">Novo Cliente</a>
 {% for c in clientes %}
   {{ c.nome }} - {{ c.email }}
   <a href="{% url 'editar_cliente' c.pk %}">Editar</a>
   <a href="{% url 'deletar_cliente' c.pk %}">Excluir</a>
+
 {% endfor %}

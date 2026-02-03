@@ -8,6 +8,12 @@ from django.views import View
 
 from .models import Cliente
 
+
+def index(request):
+    template = loader.get_template('clientes/index.html')
+    return HttpResponse(template.render({}, request))   
+
+
 class ClienteListView(ListView):
     model = Cliente
     template_name = 'clientes/lista.html'
