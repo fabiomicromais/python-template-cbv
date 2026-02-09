@@ -51,6 +51,14 @@
             color: #666;
             font-size: 14px;
         }
+        .box1 {
+            background: #ffc222;
+            border-left: 5px solid #44b78b;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+
     </style>
 </head>
 <body>
@@ -335,12 +343,12 @@ urlpatterns = [
 
     @admin.register(Cliente)
     class ClienteAdmin(admin.ModelAdmin):
-        list_display = ('nome cliente', 'email cliente')
+        list_display = ('nome', 'email')
     
 </pre>
 </div>
 
-<h2>13=4. Criar pagina principal para acessar o app</h2>
+<h2>14. Criar pagina principal para acessar o app</h2>
 <div class="box">
 <pre>
 # dentro da pasta templates crie o arquivo index.html
@@ -358,8 +366,65 @@ urlpatterns = [
     ]
  </pre>
 </div>
+<div class="box1">   
+    <h2>AVALIAÇÃO - PRÁTICA WEB - 01</h2>
+    <h3>1 - È proibido a utilização de consultas externas a esse material. </h3>
+    <h3>2 - no terminal crie uma pasta com seu-nome-prova-web-01 e dentro dela desenvolva o projeto</h3>
+</div>
+<div class="box">
+# QUESTÃO 01
+ <pre>
+     - dentro da pasta templates crie uma página inicial para acessar tanto o app clientes quanto o app produtos
+</pre>
 
+# QUESTÃO 02
+<pre>
+     - crie um novo app chamado produtos e configure o CRUD para um modelo Produto com os campos nome, preço e descrição, quantidade, preco de compra, preco de venda, data de validade, os campos nome e preço devem ser obrigatórios.
+</pre> 
 
+# QUESTÃO 03
+ <pre>
+    - adicione um campo de data de criação ao modelo Cliente e exiba essa informação na lista de clientes
+</pre>    
+
+# QUESTÃO 04 
+<pre>
+   - adicione um campo de telefone ao modelo Cliente e atualize os formulários e templates para incluir esse campo 
+</pre>
+
+# QUESTÃO 05
+<pre>       
+   - coloque css para deixar a aplicação mais bonita
+</pre>
+
+# QUESTÃO 06
+<pre>
+   - insira dados em ambos apps e teste as operações de CRUD para garantir que tudo esteja funcionando corretamente
+</pre>
+
+# QUESTÃO 07
+<pre>
+  - crie um superusuário e acesse o painel de administração do Django para gerenciar os dados dos clientes e produtos
+</pre>
+
+# QUESTÃO 08 
+<pre>
+  - ao final sincronize o projeto no seu repositório do github e coloque o link na sua avaliação 
+</pre>
+<div class="box1">
+Forma de entrega e observações importantes para a avaliação
+<pre>
+   Forma de entrega:
+   - entrega: envie o link do seu repositório no github para o email: fabio.lima@ifbaiano.edu.br
+   - faça um print da tela de projeto rodando no browser e envie junto com o link do github
+   Observações importantes: 
+     - o projeto deve estar público no github para que eu possa acessar e avaliar
+     - o projeto deve conter o código completo, incluindo os arquivos de configuração, modelos, views, templates e urls
+     - o projeto deve estar funcionando corretamente, ou seja, todas as operações de CRUD devem estar funcionando sem erros
+     - a cada questão salve o projeto para não perder o codigo 
+</pre>
+</div>
+        boa sorte a todos!
 
 </main>
 
